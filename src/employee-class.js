@@ -15,6 +15,7 @@ export class Employee {
   lastName;
   salary;
   bonus;
+  manager;
   
 
   calculateBonus() {

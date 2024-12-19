@@ -77,3 +77,25 @@ export const allEmployees = [
 
 console.log(allEmployees);
 
+function findManager() {
+  const managers = allEmployees
+    .filter((employee) => employee.title === "Manager")
+    .map((employee) => {
+      return {
+        manager: `${employee.firstName} ${employee.lastName}`,
+        team: employee.team,
+      };
+    });
+
+  console.log(managers);
+
+  allEmployees.forEach((employee) => {
+    managers.forEach((element) => {
+      if (employee.team === element.team && employee.title === "Employee") {
+        employee.manager = element.manager;
+      }
+    });
+  });
+}
+
+findManager();

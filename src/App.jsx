@@ -2,16 +2,35 @@ import { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import "./App.css";
 import { allEmployees } from "./all-employees.js";
+import { Popup } from "./pop-up.jsx";
 
 function App() {
   const [newBonus, setNewBonus] = useState(false);
+  const [disableBtn, SetDisableBtn] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
+  const [employee, SetEmployee] = useState({});
 
   function updateBonus() {
     allEmployees.forEach((employee) => {
       employee.addToBonus();
-      console.log(employee.bonus);
       setNewBonus(true);
+      SetDisableBtn(true);
     });
+  }
+
+  function togglePopup() {
+    setShowPopup(!showPopup);
+  }
+
+  function handleClick(employee) {
+    SetEmployee(employee);
+    togglePopup();
+  }
+
+  if (showPopup) {
+    document.body.classList.add("active-modal");
+  } else {
+    document.body.classList.remove("active-modal");
   }
 
   return (
@@ -21,11 +40,16 @@ function App() {
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
+
       <h1>B&H</h1>
 
-      <button type="button" onClick={updateBonus}>
-        Increase Bonus by 5%
-      </button>
+      {!disableBtn && (
+        <button type="button" onClick={updateBonus}>
+          Increase Bonus by 5%
+        </button>
+      )}
+
+      {disableBtn && <h2>All Bonuses were successfully updated!</h2>}
 
       <div>
         <table>
@@ -39,7 +63,9 @@ function App() {
             {allEmployees.map((employee, index) => (
               <>
                 <tr key={index}>
-                  <td key={index + 1}>{employee.lastName}</td>
+                  <td key={index + 1} onClick={() => handleClick(employee)}>
+                    {employee.lastName}
+                  </td>
 
                   <td key={index + 2}>
                     ${newBonus ? employee.bonus : employee.calculateBonus()}.00
@@ -50,6 +76,16 @@ function App() {
           </tbody>
         </table>
       </div>
+
+      {showPopup && (
+        <section>
+          <Popup
+            employee={employee}
+            togglePopup={togglePopup}
+            newBonus={newBonus}
+          />
+        </section>
+      )}
     </>
   );
 }
