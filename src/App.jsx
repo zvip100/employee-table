@@ -41,7 +41,7 @@ function App() {
         </a>
       </div>
 
-      <h1>B&H</h1>
+      <h1>Employee Table</h1>
 
       {!disableBtn && (
         <button type="button" onClick={updateBonus}>
@@ -51,7 +51,9 @@ function App() {
 
       {disableBtn && <h2>All Bonuses were successfully updated!</h2>}
 
-      <div>
+      <div className="employee-table">
+        <h4>&#183; Click on any Employee name to see more info &#183;</h4>
+
         <table>
           <thead>
             <tr>

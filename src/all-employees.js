@@ -87,8 +87,6 @@ function findManager() {
       };
     });
 
-  console.log(managers);
-
   allEmployees.forEach((employee) => {
     managers.forEach((element) => {
       if (employee.team === element.team && employee.title === "Employee") {
@@ -99,3 +97,12 @@ function findManager() {
 }
 
 findManager();
+
+function saveToStorage() {
+  localStorage.clear();
+  localStorage.setItem("employees", JSON.stringify(allEmployees));
+  const fromStorage = JSON.parse(localStorage.getItem("employees"));
+  console.log("storage: ", fromStorage);
+}
+
+saveToStorage();

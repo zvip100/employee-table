@@ -33,3 +33,8 @@
   }
 }
 
+.employee-table {
+  display: flex;
+  flex-direction: column;
+  align-content: stretch;
+}
