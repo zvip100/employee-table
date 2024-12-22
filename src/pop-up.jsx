@@ -1,11 +1,11 @@
 import "./popup.css";
 
-export function Popup({ employee, togglePopup, newBonus }) {
+export function Popup({ employee, togglePopup }) {
   return (
-    <div className="modal">
+    <div className="popup">
       <div className="overlay" onClick={togglePopup}>
-        <div className="modal-content">
-          <button type="button" className="close-modal" onClick={togglePopup}>
+        <div className="popup-content">
+          <button type="button" className="close-popup" onClick={togglePopup}>
             Close
           </button>
 
@@ -28,7 +28,7 @@ export function Popup({ employee, togglePopup, newBonus }) {
 
             <tbody>
               <tr>
-                {employee.team !== null && <td>{employee.team}</td>}
+                {employee.team && <td>{employee.team}</td>}
 
                 <td>{employee.title}</td>
                 <td>{employee.prefix}</td>
@@ -39,9 +39,7 @@ export function Popup({ employee, togglePopup, newBonus }) {
 
                 <td>${employee.salary}.00</td>
 
-                <td>
-                  ${newBonus ? employee.bonus : employee.calculateBonus()}.00
-                </td>
+                <td>${employee.bonus}.00</td>
               </tr>
             </tbody>
           </table>

@@ -6,6 +6,7 @@ export class Employee {
     this.firstName = firstName;
     this.lastName = lastName;
     this.salary = salary;
+    this.bonus = this.calculateBonus();
   }
 
   team;
@@ -16,7 +17,6 @@ export class Employee {
   salary;
   bonus;
   manager;
-  
 
   calculateBonus() {
     let bonusAmount;
@@ -33,14 +33,13 @@ export class Employee {
       case "Employee":
         bonusAmount = (this.salary / 100) * 5;
     }
-  
+
     return bonusAmount;
   }
 
   addToBonus() {
-    const getCurrentBonus = this.calculateBonus()
-    const updateBonus = getCurrentBonus + (this.salary / 100) * 5;
+    const updateBonus = this.bonus + (this.salary / 100) * 5;
     this.bonus = updateBonus;
-    return updateBonus;
+    return this.bonus;
   }
 }

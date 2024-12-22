@@ -1,11 +1,10 @@
 import { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import "./App.css";
-import { allEmployees } from "./all-employees.js";
+import { allEmployees, saveToStorage } from "./all-employees.js";
 import { Popup } from "./pop-up.jsx";
 
 function App() {
-  const [newBonus, setNewBonus] = useState(false);
   const [disableBtn, SetDisableBtn] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const [employee, SetEmployee] = useState({});
@@ -13,9 +12,9 @@ function App() {
   function updateBonus() {
     allEmployees.forEach((employee) => {
       employee.addToBonus();
-      setNewBonus(true);
-      SetDisableBtn(true);
     });
+    SetDisableBtn(true);
+    saveToStorage();
   }
 
   function togglePopup() {
@@ -28,9 +27,9 @@ function App() {
   }
 
   if (showPopup) {
-    document.body.classList.add("active-modal");
+    document.body.classList.add("active-popup");
   } else {
-    document.body.classList.remove("active-modal");
+    document.body.classList.remove("active-popup");
   }
 
   return (
@@ -63,17 +62,13 @@ function App() {
           </thead>
           <tbody>
             {allEmployees.map((employee, index) => (
-              <>
-                <tr key={index}>
-                  <td key={index + 1} onClick={() => handleClick(employee)}>
-                    {employee.lastName}
-                  </td>
+              <tr key={index}>
+                <td onClick={() => handleClick(employee)}>
+                  {employee.lastName}
+                </td>
 
-                  <td key={index + 2}>
-                    ${newBonus ? employee.bonus : employee.calculateBonus()}.00
-                  </td>
-                </tr>
-              </>
+                <td>${employee.bonus}.00</td>
+              </tr>
             ))}
           </tbody>
         </table>
@@ -81,11 +76,7 @@ function App() {
 
       {showPopup && (
         <section>
-          <Popup
-            employee={employee}
-            togglePopup={togglePopup}
-            newBonus={newBonus}
-          />
+          <Popup employee={employee} togglePopup={togglePopup} />
         </section>
       )}
     </>

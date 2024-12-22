@@ -98,8 +98,7 @@ function findManager() {
 
 findManager();
 
-function saveToStorage() {
-  localStorage.clear();
+export function saveToStorage() {
   localStorage.setItem("employees", JSON.stringify(allEmployees));
   const fromStorage = JSON.parse(localStorage.getItem("employees"));
   console.log("storage: ", fromStorage);
