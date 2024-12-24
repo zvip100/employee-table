@@ -8,6 +8,7 @@ function App() {
   const [disableBtn, SetDisableBtn] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const [employee, SetEmployee] = useState({});
+  const [sortingOrder, setSortingOrder] = useState("");
 
   function updateBonus() {
     allEmployees.forEach((employee) => {
@@ -15,6 +16,16 @@ function App() {
     });
     SetDisableBtn(true);
     saveToStorage();
+  }
+
+  function sortTable(arr, order) {
+    if (order === "Sort By highest Bonus first") {
+      arr.sort((a, b) => b.bonus - a.bonus);
+    } else if (order === "Sort by name") {
+      arr.sort((a, b) => a.lastName.localeCompare(b.lastName));
+    } else if (order === "Sort By lowest Bonus first") {
+      arr.sort((a, b) => a.bonus - b.bonus);
+    }
   }
 
   function togglePopup() {
@@ -40,7 +51,7 @@ function App() {
         </a>
       </div>
 
-      <h1>Employee Table</h1>
+      <h1 className="title">Employee Table</h1>
 
       {!disableBtn && (
         <button type="button" onClick={updateBonus}>
@@ -49,6 +60,17 @@ function App() {
       )}
 
       {disableBtn && <h2>All Bonuses were successfully updated!</h2>}
+
+      <select
+        className="dropdown"
+        value={sortingOrder}
+        onChange={(event) => setSortingOrder(event.target.value)}
+      >
+        <option>Choose your sorting order</option>
+        <option>Sort by name</option>
+        <option>Sort By highest Bonus first </option>
+        <option>Sort By lowest Bonus first </option>
+      </select>
 
       <div className="employee-table">
         <h4>&#183; Click on any Employee name to see more info &#183;</h4>
@@ -61,6 +83,7 @@ function App() {
             </tr>
           </thead>
           <tbody>
+            {sortTable(allEmployees, sortingOrder)}
             {allEmployees.map((employee, index) => (
               <tr key={index}>
                 <td onClick={() => handleClick(employee)}>

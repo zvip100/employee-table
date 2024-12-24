@@ -25,7 +25,7 @@ const gold = new Employee(
   "Manager",
   "Mr",
   "Yehuda",
-  "gold",
+  "Gold",
   120000
 );
 const weiss = new Employee(
